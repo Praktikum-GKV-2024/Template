@@ -16,10 +16,22 @@ set(SOURCES
 add_executable(main ${SOURCES})
 
 # Link the executable with necessary libraries
-target_link_libraries(main
-    ${CMAKE_SOURCE_DIR}/lib/libfreeglut_static.a
-    glu32
-    opengl32
-    winmm
-    gdi32
-)
+# Windows
+IF(WIN32) 
+    target_link_libraries(main
+        ${CMAKE_SOURCE_DIR}/lib/libfreeglut_static.a
+        glu32
+        opengl32
+        winmm
+        gdi32
+    )
+ELSE()
+    target_link_libraries(main
+        ${CMAKE_SOURCE_DIR}/lib/libglut.so
+        X11
+        Xxf86vm
+        Xrandr
+        GL
+        m
+    )
+ENDIF()
